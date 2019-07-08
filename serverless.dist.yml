@@ -1,0 +1,34 @@
+service: alfred-bot
+provider:
+  name   : aws
+  runtime: nodejs8.10
+  region : ur-region-1
+  role   : arn:aws:iam::XXXXXXXXX:role/YOUR_AWS_LAMBDA_ROLE
+  timeout: 5
+  stage  : ${opt:stage, 'dev'}
+  memorySize: 128
+functions:
+  dispatcher:
+    handler    : bot.run
+    description: The trustworthy Alfred Pennyworth
+    # Environment variables to pass to our code
+    environment:
+      BOT_NAME        : ${self:custom.botName}
+      CDN_DISTRIBUTION: ${self:custom.distributionId}
+      # You can also replace these variables with the actual values
+      VERIFICATION_TOKEN: ${ssm:slack_verification_token}
+      BOT_TOKEN         : ${ssm:slack_bot_token}
+    # Excludes files from the final deployed package
+    exclude: 
+      - package-lock.json
+    # Optimize the lambda by minimizing and zipping it
+    # Disable this to debug more easily
+    optimize: true
+    # Create the API gateway
+    events:
+      - http:
+          path: "/event-handler"
+          method: post
+custom:
+  botName: alfred
+  distributionId: ABC123456

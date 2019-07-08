@@ -1,0 +1,18 @@
+{
+  "name": "alfred",
+  "version": "0.0.1",
+  "description": "Alfred Pennyworth the automated Slack Butler",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "foxxor",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.488.0",
+    "slack": "^11.0.2"
+  },
+  "devDependencies": {
+    "serverless-plugin-optimize": "^4.0.2-rc.1"
+  }
+}
